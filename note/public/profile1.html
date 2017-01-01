@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+  <meta charset="utf-8">
+  
+<head >
+
+<title>User profile</title>
+
+    <script src="string.js" type="text/javascript"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+	
+    <script>
+    // initialize and setup facebook js sdk
+    window.fbAsyncInit = function() {
+
+        FB.init({
+            appId      : '166311783850103',
+            xfbml      : true,
+            cookie     : true,
+            version    : 'v2.8'
+        });
+
+
+        FB.getLoginStatus(function(response) {
+
+            accesstoken= 'EAACXQnrMYHcBAEZBjZC1aTYLBwam93xVSyuRBQHqOc4vjYZChL3J62q6ns3RHKCVM0ZAwUoTbgLikRxyRj9cXTONqqhfKlpAEOrMcOZCP71HS1lnYjZCqX6W1byKsoCyA0IXsJhuVtX4zDceaTOD6se9ZAQa27k2ZAgZD';
+
+            getInfo(accesstoken)
+
+        });
+    };
+	
+	
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+	
+	 function getInfo(accesstoken) {
+         details = String.format("https://graph.facebook.com/me?fields=picture.width(150).heigth(200),name,email,gender,education,location,birthday&access_token={0}", accesstoken)
+         $.ajax({
+             dataType    : "jsonp",
+             type        : "GET",
+             url     :   details,
+             success : function(data) {
+                 console.log(details)
+                 console.log(data.picture.data)
+
+                 document.getElementById('username').innerHTML = data.name;
+                 document.getElementById('P-username').innerHTML = data.name;
+                 document.getElementById('email').innerHTML = data.email;
+                 document.getElementById('profilePic').innerHTML = "<img src='" + data.picture.data.url + "' class='img-circle img-responsive'   >";
+                 document.getElementById('birthday').innerHTML = data.birthday;
+                 document.getElementById('location').innerHTML = data.location.name;
+                 document.getElementById('gender').innerHTML = data.gender;
+                 for (ed in data.education) {
+                     var school = data.education[ed].school;
+                     var schoolName = school.name;
+                     document.getElementById('education').innerHTML = schoolName;
+                 }
+             }
+         });
+    }
+
+</script>
+
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+  
+</head>
+
+
+<body>
+
+<br>
+
+<!-- nav bar -->
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-md-offset-3   toppad">
+            <div class="well well-sm">
+                <div class="row">
+                  <div id="profilePic" class="col-md-3 col-lg-3 " align="center"></div>
+
+                    <div class="col-sm-6 col-md-8">
+              
+						<div class="row">
+				
+							<div class=" col-md-9 col-lg-9 "> 
+								<h3>Profile</h3>
+								<table class="table table-user-information">
+				 
+								<tbody>
+									<tr>
+										<td >User Name</td>
+										<td id ="P-username" ></td>
+									</tr>
+					  
+									<tr hidden="true">
+										<td >User Name</td>
+										<td id ="username" ></td>
+									</tr>
+					  
+									<tr>
+										<td >Date of Birth</td>
+										<td id="birthday"></td>
+									</tr>
+                   
+									<tr>
+										<td >location:</td>
+										<td id="location"></td>
+									</tr>
+									
+									<tr>
+										<td>Gender</td>
+										<td id="gender"></td>
+									</tr>
+                       
+									<tr>
+										<td >Email</td>
+										<td ><a id="email" href="mailto:info@support.com"></a></td>
+									</tr>
+								</tbody>
+								</table>
+						
+						
+						
+								<table class="table table-user-information">
+								<tbody>
+              
+									<h3>Education</h3>
+									<tr>
+										<td id ="education"></td>
+									</tr>
+				
+								</tbody>
+								</table>
+				
+				
+				
+								<div class="panel-footer">
+									<span class="pull-right">
+									<a href="index.html" data-original-title="back to userlist" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-log-out"></i></a>
+									</span>
+								</div>
+            
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</body>
+</html>
